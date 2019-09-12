@@ -1,0 +1,136 @@
+Elixir Variables
+
+a variable name always starts with a lowercase alphabetic character or an
+underscore.
+
+Elixir is a dynamic programming language which means you don't explicitly variables and their type
+
+Instead, the variable type is determined by whatever data it contains
+at the moment. 
+
+In Elixir terms, assignment is called binding. When you initialize a variable
+with a value, the variable is bound to that value:(immutable variables)
+
+Each expression in Elixir has a result.
+
+Rebinding doesn’t mutate the existing memory location. It reserves new memory and
+reassigns the symbolic name to the new location.
+
+NOTE You should always keep in mind that data is immutable. Once a memory
+location is occupied with data, it can’t be modified until it’s released. 
+But variables can be rebound, which makes them point to a different memory location.
+Thus, variables are mutable, but the data they point to is immutable.
+
+Elixir is a garbage-collected language, which means you don’t have to manually release
+memory. When a variable goes out of scope, the corresponding memory is eligible for
+garbage collection and will be released sometime in the future
+
+A module name must follow certain rules. It starts with an upper-case letter and is
+usually written in CamelCase style
+
+Elixir projects are usually organized into three directories:
+• ebin - contains the compiled bytecode
+• lib - contains elixir code (usually .ex files)
+• test - contains tests (usually .exs files)
+
+Elixir functions scoping
+
+functions defined with def can be evoked in other modules, or shell
+but functions which are defined by defp can only be called locally within a module.
+
+The difference between == and === is that the latter is more strict when comparing integers and floats:
+
+The |>, or pipe operator, takes the value on the left and passes it as the first
+argument to the function on the right. We call these compositions pipes or
+pipelines, and we call each individual function a segment or pipe segment
+
+The ^ pin operator is used when  you want to match a variable against it's prior value 
+
+The _ variable can be used when we don't care much  about a particular value in a pattern
+The variable _ is special in that it can never be read from.
+
+case allows us to compare a value against many patterns until we find a matching one:
+
+case is useful when you need to match against different values. However, in many circumstances, we want to check
+different conditions and find the first one that evaluates to true. In such cases, one may use cond:
+
+If you want to pattern match against an existing variable, you need to use the ^ pin operator
+
+When Elixir sees a list of printable ASCII numbers, Elixir will print that as a char list (literally a list of characters).
+Char lists are quite common when interfacing with existing Erlang code 
+
+a lower-arity function is implemented in terms of a higher-arity one. This pattern
+is so frequent that Elixir allows you to specify defaults for arguments by using the
+\\ operator followed by the argument’s default value: def sum(a, b \\ 0) do
+
+Always keep in mind that default values generate multiple functions of the same name
+with different arities. The previous code generates three functions: MyModule.fun/2,
+MyModule.fun/3, and MyModule.fun/4.
+
+def fun(a, b \\ 1, c, d \\ 2) do
+a + b + c + d
+
+There are two important benefits of immutability:side-effect-free functions and data consistency.
+Given that data can’t be mutated, you can treat most functions as side-effect-free
+transformations. They take an input and return a result.
+
+Side-effect-free functions are easier to analyze, understand, and test. They have
+well-defined inputs and outputs. When you call a function, you can be sure that no variable
+will be implicitly changed. Whatever the function does, you must take its result and
+do something with it.
+
+#NOTE Elixir isn’t a pure functional language, so functions may still have side
+effects. For example, a function may write something to a file and issue a database
+or network call, which causes it to produce a side effect. But you can be
+certain that a function won’t modify the value of any variable
+
+%{Maps => "Map"}
+The two syntaxes for accessing map keys reveal the dual nature of maps. The `map[key]`
+syntax is used for dynamically created maps that may have any key, of any type.
+`map.key` is used with maps that hold a predetermined set of atoms keys, which are
+expected to always be present. Structs, defined via `defstruct/1`, are one example
+of such "static maps", where the keys can also be checked during compile time.
+
+Maps can be pattern matched on. When a map is on the left-hand side of a
+pattern match, it will match if the map on the right-hand side contains the
+keys on the left-hand side and their values match the ones on the left-hand
+side. This means that an empty map matches every map.
+
+    iex> %{} = %{foo: "bar"}
+    %{foo: "bar"}
+    iex> %{a: a} = %{:a => 1, "b" => 2, [:c, :e, :e] => 3}
+    iex> a
+    1
+    iex> %{:c => 3} = %{:a => 1, 2 => :b}
+    ** (MatchError) no match of right hand side value: %{2 => :b, :a => 1}
+
+Variables can be used as map keys both when writing map literals as well as
+when matching:
+
+    iex> n = 1
+    1
+    iex> %{n => :one}
+    %{1 => :one}
+    iex> %{^n => :one} = %{1 => :one, 2 => :two, 3 => :three}
+    %{1 => :one, 2 => :two, 3 => :three}
+
+Maps also support a specific update syntax to update the value stored under
+*existing* atom keys:
+
+    iex> map = %{one: 1, two: 2}
+    iex> %{map | one: "one"}
+    %{one: "one", two: 2}
+    iex> %{map | three: 3}
+    ** (KeyError) key :three not found
+
+
+iex(2)>
+
+In addition, a map is also enumerable, which means
+that all the functions from the Enum module can work with maps
+
+In Elixir, a function is a first-class citizen, which means it can be assigned to a variable.
+Here, assigning a function to a variable doesn’t mean calling the function and storing
+its result to a variable. Instead, the function definition itself is assigned, and you can
+use the variable to call the function
+

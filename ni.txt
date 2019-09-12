@@ -1,0 +1,45 @@
+Steve was wrong;
+
+“The way the processor industry is going is to add more and more cores, but
+nobody knows how to program those things. I mean, two, yeah; four, not really;
+eight, forget it.” —Steve Jobs, Apple
+
+If your problem is concurrent, if you are building a multiuser system, or if
+you are building a system that evolves with time, then using Erlang might
+save you a lot of work, since Erlang was explicitly designed for building such
+systems.
+
+Functional
+programming forbids code with side effects. Side effects and concurrency
+don’t mix
+
+Erlang has no
+mutexes, no synchronized methods, and none of the paraphernalia of shared
+memory programming.
+
+Processes interact by one method, and one method only, by exchanging
+messages. Processes share no data with other processes. This is the reason
+why we can easily distribute Erlang programs over multicores or networks.
+
+Concurrent programs in Erlang are made from sets of communicating
+sequential processes.
+
+To write a concurrent program in Erlang, you must identify a set of processes
+that will solve your problem. We call this act of identifying the processes
+modeling concurrency.
+
+The virtual machine parallelizes your
+concurrent Erlang programs and takes care of process isolation, distribution, and the
+overall responsiveness of the system.
+
+Elixir is semantically close to Erlang: many of its language constructs map directly to
+their Erlang counterparts. But Elixir provides some additional constructs that make it
+possible to radically reduce boilerplate and duplication
+
+Module attributes
+The purpose of module attributes is twofold: they can be used as compile-time constants,
+and you can register any attribute, which can then be queried in runtime.
+
+The operator && returns the second expression, but only if the first expression is
+truthy. Otherwise, it returns the first expression without evaluating the second one
+

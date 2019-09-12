@@ -1,0 +1,80 @@
+Elixir Lists are explicitly Linked Lists, this means that a value in a list consists of it's value and the pointer to
+the next value in the list until the end of the list is reached, this pair is called a cons cell.
+
+This makes accessing the length of the a list a linear operation.
+we have to traverse the entire list in order to get to it's end.
+
+Updating a list is fast as long as we are pre pending elements
+
+NOTE:
+
+list = [1,2,3,[[]]]
+
+[0] + list #This operation is fast because we are  adding a cons that points to the remainder of the list
+
+list + [4] #This operation is slow because we need to rebuild the whole list and add a new element to the end.
+
+Tuples in Elixir act as arrays they are stored contiguously in memory, 
+This means getting the tuple size or accessing an element by index is fast.
+However, updating or adding elements to tuples is expensive because it requires copying the
+whole tuple in memory.
+
+The Big take here is that elixir uses immutable data types.
+
+Those performance characteristics dictate the usage of those data structures. One very common use case for tuples is
+to use them to return extra information from a function. For example, File.read/1 is a function that can be used
+to read file contents and it returns tuples:
+
+Given that Elixir is a functional language, you’ll often need to combine functions, passing
+the result of one function as the argument to the next one. Elixir comes with a
+built-in operator, |>, called the pipeline operator, that does exactly this:
+
+More generally, the pipeline operator places the result of the previous call as the first
+argument of the next call
+
+{} = {} Pattern Matching / Variables in patterns
+Whenever a variable name exists in the left-side pattern, it always matches the corresponding
+right-side term. In addition, the variable is bound to the term it matches.
+
+When it comes to matching, the anonymous variable works just like a named variable:
+it matches any right-side term. But the value of the term isn’t bound to any variable.
+
+The pattern-matching expression consists of two parts: the pattern (left side) and the
+term (right side). In a match expression, the attempt to match the term to the pattern
+takes place
+
+¡ You assert your expectations about the right-side term. If these expectations
+aren’t met, an error is raised.
+¡ You bind some parts of the term to variables from the pattern.
+
+When matching a map, the left-side pattern doesn’t need to contain all the keys from
+the right-side term: iex(1)> %{age: age} = %{name: "Bob", age: 25}
+
+A clause is a function definition specified by the def construct If you provide multiple definitions of the
+same function with the same arity, it’s said that the function has multiple clauses
+
+Guards are an extension of the basic pattern-matching mechanism. They allow you to
+state additional broader expectations that must be satisfied for the entire pattern to match.
+
+Elixir terms can be compared with the
+operators < and >, even if they’re not of the same type. In this case, the type ordering
+determines the result:
+number < atom < reference < fun < port < pid < tuple < map < list < bitstring (binary)
+
+A number is smaller than any other type, which is why TestNum.test/1 always returns
+:positive if you provide a non-number. To fix this, you have to extend the guard by
+testing whether the argument is a number,
+
+The set of operators and functions that can be called from guards is very limited. In
+particular, you may not call your own functions, and most of the other functions won’t
+work
+
+the with special form, which can be very
+useful when you need to chain a couple of expressions and return the error of the first
+expression that fails
+
+//python
+CGI is a standard mechanism by which a web server can
+pass your queries (typically supplied through a web form) to a dedicated program (for example,
+your Python program) and display the result as a web page. It is a simple way of creating
+web applications without writing your own special-purpose application server 
