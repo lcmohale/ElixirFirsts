@@ -1,0 +1,23 @@
+I wanted to do:
+
+a function to only work when arguments are numbers
+
+Trouble creating a function that prints to n (n is an Integer)
+
+Had to Disect the match
+Had to consider the type when using parttern matching for extracting
+Know what you dealing with
+
+date_time = { {year, month, day}, _ } = :calendar.local_time()
+
+here had to know that :calendar.local_time() result is a tuple then made it easy
+to know how to extract the values you want 
+
+date_time = {date,_} = { {year, month, day}, _ } = :calendar.local_time()
+
+why cant we do this 
+cond do
+	keywordlist[:name] = "Thabo" -> "Hola #{keywordlist[:name]}"
+end
+
+understand the difference between an expression, value, pattern, term 

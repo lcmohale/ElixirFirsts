@@ -1,0 +1,10 @@
+A profiler  is a tool for monitoring the dynamic execution behaviour of a program.
+A profiler   measures the memory usage, execution time and typical instructions during the
+execution of a program.
+
+A profiler provides insight in the execution behaviour of a program for debugging
+purposes, This analysis is also used to improve the performance or decreasing the
+memory footprint of an application.
+
+Aspect Oriented Programming (AOP, [43]) is a programming paradigm that adds additional
+behaviour to source code without the need to modify the original code.

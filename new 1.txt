@@ -1,0 +1,127 @@
+Elixir for the Total Beginner.
+
+Here’s a quick overview: in the functional programming paradigm, functions
+are the basic building blocks, all values are immutable, and the code is
+declarative.
+
+The functional paradigm focuses
+on building software using pure functions organized in a way that describes
+what software must do, not how it must do it.
+
+In functional programming, functions are the primary tools for building a
+program. You can’t create a useful program without writing or using functions.
+They receive data, complete some operation, and return a value. They are
+usually short and expressive
+
+We combine multiple little functions to create a larger program. The complexity
+of building a larger application is reduced when the functions have these
+properties:
+• The values are immutable.
+• The function’s result is affected only by the function’s arguments.
+• The function doesn’t generate effects beyond the value it returns.
+Functions that have these properties are called pure functions
+
+add2 = fn (n) -> n + 2 end
+This takes an input, processes it, and returns a value. This is the way most
+functions work. A few functions will be more complex—their results are
+unpredictable and they are known as impure functions.
+
+Functional programming always passes the values explicitly between the
+functions, making clear to the developer what the inputs and outputs are
+
+hey say that rather than having to translate their problem to the programming
+language, they can adapt the language to the problem
+
+Purity means that functions have no side effects. The output of a function is
+predictably the same as long as the input is the same. A pure function isn’t
+affected by and doesn’t affect anything outside; it also doesn’t mutate any value.
+
+The conventional object-oriented languages use objects to store a state, providing
+methods for operating on that state. The object’s state and methods
+are very attached to each other. If we change the object’s state, the method
+invocation will result in a different value
+
+Imperative programming focuses on how to solve a problem, describing each
+step as actions. Functional programming, by contrast, is declarative.
+Declarative programming focuses on what is necessary to solve a problem,
+describing the data flow.
+
+Values are anything that can represent data in Elixir. They are the number
+of cars purchased, the text in a blog post, the price of a game, the password
+text of a login. They are everything a program receives as input, computes,
+and generates as a result
+
+Literals represent values that humans can easily
+understand
+
+Text surrounded by double quotes is a value of the String.t type. It’s a literal,
+an abstraction that hides all the binary complexity for us. We can generate
+any text values by putting anything we want within double quotes
+
+The atom type is a constant and its name is the value. Atoms are useful as
+identifiers. For example, the Boolean values (true and false) and nil are the atoms
+:true, :false, and :nil.
+
+Elixir can generate a result for any expression. The process is similar to when
+you were in high school solving mathematical equations: to generate a result,
+you must add or multiply some numbers or change some Xs to Ys. We’ll create
+expressions for the computer, and the computer will show us the result. The
+simplest expression is a value, like this:
+
+and + is an operator. Operators compute values and
+generate a result.
+
+Logical expressions are often used to create conditions that control the program
+flow.
+
+The operators &&, ||, and ! accept truthy and falsy values on
+their left side. Falsy values are false and nil, while truthy values are everything
+that isn’t falsy.
+
+The && operator is a kind of and that works with Booleans and values. It returns
+the second expression’s value when the first is truthy; otherwise, it returns the
+first expression’s value.
+
+The operator && returns the second expression, but only if the first expression is
+truthy. Otherwise, it returns the first expression without evaluating the second one
+
+Variables are containers that hold values. My friend works with office facilities,
+and she organizes the office tools by putting them in boxes. She puts a label
+on boxes to help workers know what’s inside without opening them. Variables
+are like that; you can’t see what’s inside without checking, but the variable’s
+name can give you a hint
+
+You can think of functions as subprograms of your program. They receive an
+input, do some computation, and then return an output. The function body
+is where we write expressions to do a computation. The last expression value
+in the function body is the function’s output. Functions are useful for reusing
+expressions.
+
+Elixir gives developers the power of redefining some of the language’s basic
+functions and blocks by using metaprogramming. However, the fn and end
+combination is an Elixir special form. Special forms are basic building blocks
+that cannot be overridden by the developer. They’ll always work in the same
+way no matter the framework or library that you’re using in your application
+
+When we say in programming that functions are first-class citizens,
+we mean that they are like any other value. It’s an important feature that
+came from lambda calculus
+
+In this section, we used a say_hello function. It calls IO.puts, displaying a message in
+our console session. The console and our program are different entities. When a
+function interacts with anything that is external, it’s vulnerable to external problems.
+We say that function has side effects; it’s impure
+
+In case you wanted to write a "do" expression, you must either use do-blocks or separate the keyword argument with comma. For example, you should either write:
+
+    if some_condition? do
+      :this
+    else
+      :that
+    end
+
+or the equivalent construct:
+
+    if(some_condition?, do: :this, else: :that)
+
+where "some_condition?" is the first argument and the second argument is a keyword list

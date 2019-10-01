@@ -24,7 +24,7 @@ defmodule Pipe do
 	end
 	
 	def guards do
-	    input = gets('Letter to Guard:\t')
+	    input = gets('Letter to Guard: ')
 		
 		case input do
 			input when is_list(input) -> input <> "is a List"
@@ -42,11 +42,13 @@ defmodule Pipe do
 		end
 	end
 	
+	@doc "Here we update the person maps on name key"
 	def maps do
 		person = %{name: 'LCMr_music',
 				   alias: '@LCMr_music',
 				   edu: %{Education => "Lere La Tshepe", School => "none"}
 				  }
+				  
 		person = %{ person| name: "Sthabi"}
 		
 		get_in(person,[:edu, Education]) |> puts

@@ -1,4 +1,4 @@
-Elixir Lists are explicitly Linked Lists, this means that a value in a list consists of it's value and the pointer to
+Elixir Lists are explicitly Linked Lists, this means that an element in a list consists of it's value and the pointer to
 the next value in the list until the end of the list is reached, this pair is called a cons cell.
 
 This makes accessing the length of the a list a linear operation.
@@ -69,9 +69,184 @@ The set of operators and functions that can be called from guards is very limite
 particular, you may not call your own functions, and most of the other functions won’t
 work
 
-the with special form, which can be very
-useful when you need to chain a couple of expressions and return the error of the first
-expression that fails
+the with special form, which can be very useful when you need to chain a couple of expressions 
+and return the error of the first expression that fails
+
+The purpose of module attributes is twofold: they can be used as compile-time constants,
+and you can register any attribute, which can then be queried in runtime
+
+an attribute can be registered, which means it will be stored in the generated
+binary and can be accessed at runtime. Elixir registers some module attributes by
+default. For example, the attributes @moduledoc and @doc can be used to provide documentation
+for modules and functions
+
+Type specifications (often called typespecs) are another important feature based on attributes.
+This feature allows you to provide type information for your functions, which
+can later be analyzed with a static analysis tool called dialyzer
+
+A match expression has this general form:
+pattern = expression
+
+As you’ve seen in examples, you can place any expression on the right side
+
+iex(2)> a = 1 + 3
+4
+Let’s break down what happens here:
+1 The expression on the right side is evaluated.
+2 The resulting value is matched against the left-side pattern.
+3 Variables from the pattern are bound.
+4 The result of the match expression is the result of the right-side term.
+
+the operator = is right-associative
+
+date_time = {date, _ } = { _ , { hour, _ , _ }} = {{2019, 9, 24}, {3, 22, 22}}
+
+the result of a pattern match is always the result of the term being
+matched (whatever is on the right side of the match operator). You can successively match
+against the result of that term and extract different parts you’re interested in.
+
+The pattern-matching expression consists of two parts: the pattern (left side) and the
+term (right side). In a match expression, the attempt to match the term to the pattern
+takes place.
+
+If the match succeeds, all variables in the pattern are bound to the corresponding values
+from the term. The result of the entire expression is the entire term you matched. If
+the match fails, an error is raised
+
+The pattern-matching mechanism is used in the specification of function arguments
+def my_fun(arg1, arg2) do
+...
+end
+The argument specifiers arg1 and arg2 are patterns, and you can use standard matching
+techniques
+
+defmodule NumberCompare do
+    def greater(number, other_number) do
+        check(number >= other_number, number, other_number)
+    end
+
+    defp check(true, number, _), do: number
+    defp check(false, _, other_number), do: other_number
+end
+
+When calling functions, the term being matched is the argument provided to the function
+call.
+
+Elixir allows you to overload a function by specifying multiple clauses. A clause is a function
+definition specified by the def construct. If you provide multiple definitions of the
+same function with the same arity, it’s said that the function has multiple clauses
+
+WE can only have one default value for each parameter. If we try to define multiple
+function clauses with different default values, Elixir will generate a compile
+error. In the background, Elixir is creating multiple functions with different
+arities. We have two different functions:
+
+When you call the function, the runtime goes through each of its clauses, in the order
+they’re specified in the source code, and tries to match the provided arguments. The
+first clause that successfully matches all arguments is executed
+
+It’s important to be aware that from the caller’s perspective, a multiclause function is a
+single function. You can’t directly reference a specific clause. Instead, you always work
+on the entire function.
+
+Sometimes you’ll want a function to return a term indicating a failure, rather than
+raising an error. You can introduce a default clause that always matches
+
+def area(unknown) do
+    {:error, {:unknown_shape, unknown}}
+end
+
+This is because a variable
+pattern always matches the corresponding term.
+
+there’s no way to specify an area clause that’s executed
+regardless of how many arguments are passed
+
+Guards are an extension of the basic pattern-matching mechanism. They allow you to
+state additional broader expectations that must be satisfied for the entire pattern to match.
+A guard can be specified by providing the when clause after the arguments list
+
+def test(x) when x < 0 do
+    :negative
+end
+
+def test(0), do: :zero
+
+def test(x) when x > 0 do
+    :positive
+end
+
+The guard is a logical expression that places further conditions on a clause. The first
+clause will be called only if you pass a negative number, and the last one will be called
+only if you pass a positive number
+
+To program with functional thinking, your code should express what it needs
+to do, and that means balancing the use of control-flow features and function
+clauses.
+
+functional programs should be stateless, which basically means they should perform every 
+task as if for the first time, with no knowledge of what may or may not have happened earlier 
+in the program’s execution (you might say that a stateless program is ignorant of the past).
+
+In more concrete terms, this means that your functions will operate only on data passed in as arguments 
+and will never rely on outside values to perform their calculations.
+
+A lambda can reference any variable from the outside scope
+by holding a reference to a lambda, you indirectly hold a reference to all variables it uses,
+even if those variables are from the external
+
+A closure always captures a specific memory location. Rebinding a variable doesn’t
+affect the previously defined lambda that references the same symbolic name
+scope.
+
+RANGE 
+A range is an abstraction that allows you to represent a range of numbers
+It’s important to realize that a range isn’t a special type. Internally, it’s represented as
+a map that contains range boundaries
+
+KEYWORDLIST
+A keyword list is a special case of a list, where each element is a two-element tuple, and
+the first element of each tuple is an atom. The second element can be of any type
+
+Keyword lists are often used for small-size key/value structures, where keys are atoms
+https://hexdocs.pm/elixir/Keyword.html
+
+complexity of a lookup operation is O(n).
+
+Just as with maps, you can use the operator [] to fetch a value
+Keyword lists are most often useful for allowing clients to pass an arbitrary number of
+optional arguments
+
+For example, the result of the function IO.inspect, which prints
+a string representation of a term to the console, can be controlled by providing additional
+options through a keyword list:
+
+	iex(6)> IO.inspect([100, 200, 300])
+		[100, 200, 300]
+	iex(7)> IO.inspect([100, 200, 300], [width: 3])
+		[100,
+		200,
+		300]
+		
+Elixir allows you to omit the square brackets if
+the last argument is a keyword list:
+
+In fact, this pattern is so frequent that Elixir allows you to omit the square brackets if
+the last argument is a keyword list
+IO.inspect([100, 200, 300], width: 3, limit: 1)
+
+Keyword lists are often used for small-size key/value structures, where keys are atoms
+
+LAMDAS
+Anonymous functions are called lamdas in Elixir, they have no global name and have to be assigned to a variable to be reused.
+
+RECURSION
+
+A bounded recursion is a type of recursive function in which the successive
+calls to itself have an end.
+
+
+
 
 //python
 CGI is a standard mechanism by which a web server can

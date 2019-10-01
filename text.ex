@@ -47,8 +47,3 @@ in the cloud.
 Sequential languages are languages that were designed for writing sequential
 programs and have no linguistic constructs for describing concurrent computations.
 
-
-
-
-
-

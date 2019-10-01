@@ -22,7 +22,7 @@ defmodule FindPercent do
 	
 	def cal_perc do
 		num = gets("What number do you want the percentage from?  ")
-		{num,_} = Integer.parse(num)
+		{num,_ } = Integer.parse(num)
 		do_cal_perc(num)
 	end
 
