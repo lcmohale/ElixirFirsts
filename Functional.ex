@@ -32,7 +32,7 @@ defmodule Functions do
 	end
 		
 	def listed([arg1, arg2, arg3]) do
-		Enum.each([arg1, arg2, arg3], fn x -> puts(x) end)
+		[arg1, arg2, arg3]
 	end
 	def listed([arg1, arg2, arg3], keywordlist) do
 		cond do
@@ -42,6 +42,20 @@ defmodule Functions do
 			true -> {:error,"wrong arguments supplied"}
 		end
 		#Highly discouraged THE LOOK UP IS O(n), linear keyword list
+	end
+	
+
+	def list_len([]), do: 0
+	def list_len(list) do
+		inc(0,list)
+	end
+	
+	defp inc(current_sum, []) do
+		current_sum
+	end
+	defp inc(current_sum, [head | tail]) do
+		new_sum = 1 + current_sum
+		inc(new_sum, tail)
 	end
 	
 	

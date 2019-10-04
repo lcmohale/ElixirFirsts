@@ -191,14 +191,6 @@ in the program’s execution (you might say that a stateless program is ignorant
 In more concrete terms, this means that your functions will operate only on data passed in as arguments 
 and will never rely on outside values to perform their calculations.
 
-A lambda can reference any variable from the outside scope
-by holding a reference to a lambda, you indirectly hold a reference to all variables it uses,
-even if those variables are from the external
-
-A closure always captures a specific memory location. Rebinding a variable doesn’t
-affect the previously defined lambda that references the same symbolic name
-scope.
-
 RANGE 
 A range is an abstraction that allows you to represent a range of numbers
 It’s important to realize that a range isn’t a special type. Internally, it’s represented as
@@ -237,8 +229,62 @@ IO.inspect([100, 200, 300], width: 3, limit: 1)
 
 Keyword lists are often used for small-size key/value structures, where keys are atoms
 
+You may wonder if it’s better to use maps instead of keywords for optional arguments.
+A keyword list can contain multiple values for the same key. In addition, you can control
+the ordering of keyword list elements — something that isn’t possible with maps
+
+MapSet
+A MapSet is the implementation of a set — a store of unique values, where a value can
+be of any type
+
+MapSet doesn’t preserve the ordering of the items.
+
+Times and dates
+Elixir has a couple of modules for working with date and time types: Date, Time, Date-
+Time, and NaiveDateTime.
+A date can be created with the ~D sigil.
+
+date.year
+date.month
+
+The DateTime module can be used to work with datetimes in some timezone. Unlike
+with other types, no sigil is available. Instead, you can create a datetime by using Date-
+Time functions
+
+datetime = DateTime.from_naive!(naive_datetime, "Etc/UTC")
+
+These are some examples of operators and functions allowed in guards:
+¡ Comparison operators (==, !=, ===, !==, >, <, <=, >=)
+¡ Boolean operators (and, or) and negation operators (not, !)
+¡ Arithmetic operators (+, -, *, /)
+¡ Type-check functions from the Kernel module (for example, is_number/1, is_
+atom/1, and so on)
+
+Similarly, you can represent a time with the ~T sigil, by providing hours, minutes, seconds,
+and microseconds:
+iex(1)> time = ~T[11:59:12.00007]
+time.hour
+time.minute
+
 LAMDAS
 Anonymous functions are called lamdas in Elixir, they have no global name and have to be assigned to a variable to be reused.
+
+A lambda can reference any variable from the outside scope
+by holding a reference to a lambda, you indirectly hold a reference to all variables it uses,
+even if those variables are from the external
+
+A closure always captures a specific memory location. Rebinding a variable doesn’t
+affect the previously defined lambda that references the same symbolic name
+scope.
+
+Anonymous functions (lambdas) may also consist of multiple clauses.
+
+lambda = fn
+	pattern_1, pattern_2 ->
+	...
+	pattern_3, pattern_4 ->
+	...
+end
 
 RECURSION
 
